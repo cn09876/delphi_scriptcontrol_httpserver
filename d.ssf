@@ -1,0 +1,10 @@
+echo "<img src=1.jpg>"
+echo rq("aaa")
+echo "<table border=1>"
+for i=1 to 10
+	color="red"
+	if i mod 2=0 then color="blue"
+	echo "<tr>"
+	echo "<td bgcolor='"& color &"'>" & i
+next
+echo "</table>"

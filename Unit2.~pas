@@ -1,0 +1,56 @@
+unit Unit2;
+
+{$WARN SYMBOL_PLATFORM OFF}
+
+interface
+
+uses
+  ComObj, ActiveX,StdVcl, Dialogs,unit3,Project1_TLB;
+
+type
+  TMyObject = class(TAutoObject, IMyObject)
+  protected
+    FCount: Integer;
+    function ShowMsg(const s: WideString): Integer; safecall;
+    function Get_Count: Integer; safecall;
+    procedure AddCount; safecall;
+    procedure Set_Count(Value: Integer); safecall;
+  public
+    procedure Initialize; override;
+  end;
+
+implementation
+
+uses ComServ;
+
+function TMyObject.ShowMsg(const s: WideString): Integer;
+begin
+    ShowMessage(S);
+    Result:= 1;
+end;
+
+function TMyObject.Get_Count: Integer;
+begin
+    Result:= FCount;
+end;
+
+procedure TMyObject.AddCount;
+begin
+    Inc(FCount);
+end;
+
+procedure TMyObject.Set_Count(Value: Integer);
+begin
+    FCount:= Value;
+end;
+
+procedure TMyObject.Initialize;
+begin
+    FCount:= 0;
+   inherited;
+end;
+
+initialization
+  TAutoObjectFactory.Create(ComServer, TMyObject, Class_MyObject,
+    ciMultiInstance, tmApartment);
+end. 
