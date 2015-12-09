@@ -1,0 +1,2 @@
+# delphi_scriptcontrol_httpserver
+DELPHI7，使用古老的ScriptControl解析脚本，用INDY包了一层httpserver,做的一个类似ASP服务器的程序
