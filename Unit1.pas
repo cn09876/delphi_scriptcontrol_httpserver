@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,ComObj, StdCtrls,OleCtrls,unit3, MSScriptControl_TLB,
   IdBaseComponent, IdComponent, IdTCPServer, IdCustomHTTPServer,
-  IdHTTPServer,idglobal,idcontext,activex;
+  IdHTTPServer,idglobal,idcontext,activex,ucommon;
 
 type
   TForm1 = class(TForm)
@@ -73,6 +73,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   httpd.DefaultPort:=809;
   httpd.Active:=true;
+  ucommon.init;
 end;
 
 procedure TForm1.httpdCommandGet(AContext: TIdContext;

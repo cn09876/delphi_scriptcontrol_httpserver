@@ -12,10 +12,10 @@ unit Project1_TLB;
 // ************************************************************************ //
 
 // PASTLWTR : 1.2
-// File generated on 2015/12/9 13:08:26 from Type Library described below.
+// File generated on 2015/12/14 10:45:43 from Type Library described below.
 
 // ************************************************************************  //
-// Type Lib: \\psf\Home\Desktop\123\Project1.tlb (1)
+// Type Lib: Y:\Downloads\delphi_scriptcontrol_httpserver\Project1.tlb (1)
 // LIBID: {BEB8853F-E41E-416D-ADE6-1BC18F3FFB9D}
 // LCID: 0
 // Helpfile: 
@@ -73,10 +73,10 @@ type
     function test(aa: OleVariant): OleVariant; safecall;
     procedure echo(str: OleVariant); safecall;
     function rq(s: OleVariant): OleVariant; safecall;
-    procedure query; safecall;
+    function query(s: OleVariant): OleVariant; safecall;
     procedure q; safecall;
     procedure file_get_contents; safecall;
-    procedure sv; safecall;
+    function sv(s: OleVariant): OleVariant; safecall;
     procedure file_put_contents; safecall;
     procedure md5; safecall;
     procedure base64_encode; safecall;
@@ -93,10 +93,10 @@ type
     function test(aa: OleVariant): OleVariant; dispid 201;
     procedure echo(str: OleVariant); dispid 202;
     function rq(s: OleVariant): OleVariant; dispid 203;
-    procedure query; dispid 204;
+    function query(s: OleVariant): OleVariant; dispid 204;
     procedure q; dispid 205;
     procedure file_get_contents; dispid 206;
-    procedure sv; dispid 207;
+    function sv(s: OleVariant): OleVariant; dispid 207;
     procedure file_put_contents; dispid 208;
     procedure md5; dispid 209;
     procedure base64_encode; dispid 210;

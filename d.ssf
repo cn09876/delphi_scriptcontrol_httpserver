@@ -1,3 +1,5 @@
+echo sv("select 9*9*9")
+echo "<hr>"
 echo "<img src=1.jpg>"
 echo rq("aaa")
 echo "<table border=1>"
@@ -8,3 +10,73 @@ for i=1 to 10
 	echo "<td bgcolor='"& color &"'>" & i
 next
 echo "</table>"
+
+function getPart(ByVal s,ByVal a,ByVal b)
+	dim iStart,strRight
+	if s<>"" then
+		iStart =instr(s,a)
+		if iStart<=0 then exit function
+		strRight=right(s,len(s)-iStart-len(a)+1)
+		iPos   =instr(strRight,b)
+		if iPos>0 then
+			getPart=left(strRight,iPos-1)
+			getPart=trim(getPart)
+		else
+			getPart=""
+		end if
+	else
+		getPart=""
+	end if
+end function
+
+Class cDs
+	dim cols,vals,rowid_
+	Public default Function v(fld)
+		fld=lcase(fld)
+		If fld="rowid" Or fld="idx" Then
+			v=rowid_
+			Exit function
+		End If
+		
+		For i=0 To UBound(cols)
+			If fld=LCase(cols(i)) Then
+				v=vals(i)
+				Exit function
+			End if
+		next
+	End Function  
+End Class
+
+Function g(sql)
+	Dim sRet
+	sRet=query(sql)
+	cols=getpart(sRet,"<cols>","</cols>")
+	rows=getpart(sRet,"<rows>","</rows>")
+	arrRows=Split(rows,"```")
+	Dim objRows()
+	ReDim objRows(UBound(arrRows))
+	For i=0 To UBound(arrRows)
+		Set objRows(i)=new cDs
+		objRows(i).rowid_=i+1
+		objRows(i).cols=Split(cols,",")
+		objRows(i).vals=Split(arrRows(i),"###")
+	next
+	g=objRows
+End Function
+
+
+pp=g("select * from test where 1=1")
+For Each r In pp
+	echo "<hr>"
+	echo r("rowid") & ". " 
+	echo r("uid")
+	echo r("pwd")
+	echo r("ÐÕÃû")
+Next
+
+echo "<hr>" & Now()
+echo rq("a")
+echo rq("name")
+echo rq("txt")
+echo "<hr>"
+echo "<form method=post action='?a=aaa&name=´óß÷ß÷'><input type=text name=txt value='ß÷Íú123zxy'><input type=submit></form>"

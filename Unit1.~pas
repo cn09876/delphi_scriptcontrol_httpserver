@@ -96,7 +96,7 @@ begin
     vbs:=TScriptControl.Create(self);
     MyObject:= TTSwSSP.Create;
     MyObject.ObjAddRef;
-    myobject.requestParams:=arequestinfo.Params;;
+    myobject.requestParams:=arequestinfo.Params;
     myobject.responseText:='';
     vbs.Language:='VBScript';
     vbs.Reset;
@@ -107,7 +107,9 @@ begin
     if fileexists(thePath+arequestinfo.Document) then
     begin
       script_content:=file_get_contents(thePath+arequestinfo.Document);
+    end
     else
+    begin
       aresponseinfo.ContentText:='404 '+ARequestInfo.Document+' not found';
       exit;
     end;

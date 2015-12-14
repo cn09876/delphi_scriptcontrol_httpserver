@@ -5,7 +5,7 @@ unit Unit3;
 interface
 
 uses
-  ComObj, ActiveX, Project1_TLB, StdVcl,classes,forms,dialogs,ComServ;
+  ComObj, ActiveX, Project1_TLB, StdVcl,classes,forms,dialogs,ComServ,ucommon,sysutils;
 
 type
   TTSwSSP = class(TAutoObject, ISwSSP)
@@ -19,8 +19,8 @@ type
     procedure file_put_contents; safecall;
     procedure md5; safecall;
     procedure q; safecall;
-    procedure query; safecall;
-    procedure sv; safecall;
+    function query(s: OleVariant): OleVariant; safecall;
+    function sv(s: OleVariant): OleVariant; safecall;
   public
     requestParams:tstrings;
     responseText:string;
@@ -78,14 +78,53 @@ begin
 
 end;
 
-procedure TTSwSSP.query;
+function TTSwSSP.query(s: OleVariant): OleVariant;
+var
+  sRet:string;
+  r:getrs;
+  i:integer;
 begin
+  try
+    r:=getrs.Create(s);
+  except
+    on e:Exception do
+    begin
+      self.echo('error execute sql: '+#13#10+s+#13#10+e.message);
+      result:='';
+      exit;
+    end;
+  end;
 
+  sRet:='<data>'+#13#10;
+  sRet:=sRet+'<cols>';
+  for i:=0 to r.rs.Fields.Count-1 do
+  begin
+    sRet:=sRet+r.rs.Fields[i].DisplayName;
+    if i<r.rs.Fields.Count-1 then sRet:=sRet+',';
+  end;
+  sRet:=sRet+'</cols>'+#13#10;
+
+
+  sRet:=sRet+'<rows>';
+  while not r.eof do
+  begin
+    for i:=0 to r.rs.Fields.Count-1 do
+    begin
+      sRet:=sRet+r.rs.Fields[i].AsString;
+      if i<r.rs.Fields.Count-1 then sRet:=sRet+'###';
+    end;
+    r.next;
+    if not r.eof then sRet:=sRet+'```';
+  end;
+  sRet:=sRet+'</rows>'+#13#10;
+  r.close;
+  sRet:=sRet+'</data>';
+  result:=sRet;
 end;
 
-procedure TTSwSSP.sv;
+function TTSwSSP.sv(s: OleVariant): OleVariant;
 begin
-
+  result:=ucommon.sv(s);
 end;
 
 initialization
