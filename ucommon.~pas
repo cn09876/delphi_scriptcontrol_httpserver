@@ -567,11 +567,6 @@ end;
 
 procedure init;
 var
-  r:getrs;
-  s:string;
-  i,j:integer;
-  b:boolean;
-  sChkAll:String;
   connstr:string;
 begin
   connstr:='Provider=Microsoft.Jet.OLEDB.4.0;Data Source='+sysutils.ExtractFilePath(application.exename)+'/db.mdb;Jet OLEDB:Database Password=;';
@@ -1173,15 +1168,7 @@ begin
 
   if sql='' then exit;
   rs.SQL.Text:=sql;
-  try
-    rs.Open;
-  except
-    on e:exception do
-    begin
-      log('logs/error.log',sql+#13#10+e.Message);
-      msgerr('中奖了,程序遇到一些问题,请联系技术支持并提供以下信息:'+#13#10+sql+#13#10+e.Message);
-    end;
-  end;
+  rs.Open;
   rs.Edit;
   eof:=rs.Eof;
   ds.DataSet:=rs;

@@ -1,26 +1,38 @@
 unit Unit3;
 
 {$WARN SYMBOL_PLATFORM OFF}
+{$TYPEDADDRESS OFF}
+{$WRITEABLECONST ON}
+{$VARPROPSETTER ON}
 
 interface
 
 uses
-  ComObj, ActiveX, Project1_TLB, StdVcl,classes,forms,dialogs,ComServ,ucommon,sysutils;
+  ComObj, ActiveX, StdVcl,classes,forms,dialogs,ComServ,ucommon,sysutils;
+
+const
+  CLASS_TSwSSP: TGUID = '{AAAAAAAD-6446-43F4-9089-8C94EFE45287}';
+
+type
+
+  ISwSSP=interface(IDispatch)
+    ['{65DE76C2-1556-49D2-BCE7-20836275168C}']
+    procedure echo(str: OleVariant); safecall;
+    function rq(s: OleVariant): OleVariant; safecall;
+    function query_sql(s: OleVariant): OleVariant; safecall;
+    procedure q; safecall;
+    function sv(s: OleVariant): OleVariant; safecall;
+  end;
+
 
 type
   TTSwSSP = class(TAutoObject, ISwSSP)
   protected
-    function test(aa: OleVariant): OleVariant; safecall;
     procedure echo(str: OleVariant); safecall;
     function rq(s: OleVariant): OleVariant; safecall;
-    procedure base64_decode; safecall;
-    procedure base64_encode; safecall;
-    procedure file_get_contents; safecall;
-    procedure file_put_contents; safecall;
-    procedure md5; safecall;
     procedure q; safecall;
-    function query(s: OleVariant): OleVariant; safecall;
     function sv(s: OleVariant): OleVariant; safecall;
+    function query_sql(s: OleVariant): OleVariant; safecall;
   public
     requestParams:tstrings;
     responseText:string;
@@ -28,10 +40,6 @@ type
 
 implementation
 
-function TTSwSSP.test(aa: OleVariant): OleVariant;
-begin
-  showmessage(aa);
-end;
 
 procedure TTSwSSP.echo(str: OleVariant);
 begin
@@ -48,37 +56,12 @@ begin
 end;
 
 
-procedure TTSwSSP.base64_decode;
-begin
-
-end;
-
-procedure TTSwSSP.base64_encode;
-begin
-
-end;
-
-procedure TTSwSSP.file_get_contents;
-begin
-
-end;
-
-procedure TTSwSSP.file_put_contents;
-begin
-
-end;
-
-procedure TTSwSSP.md5;
-begin
-
-end;
-
 procedure TTSwSSP.q;
 begin
 
 end;
 
-function TTSwSSP.query(s: OleVariant): OleVariant;
+function TTSwSSP.query_sql(s: OleVariant): OleVariant;
 var
   sRet:string;
   r:getrs;
@@ -129,6 +112,6 @@ end;
 
 initialization
   CoInitialize(nil);
-  TAutoObjectFactory.Create(ComServer, TTSwSSP, Class_TSwSSP,
-    ciMultiInstance, tmApartment);
+  TAutoObjectFactory.Create(ComServer, TTSwSSP, Class_TSwSSP,ciMultiInstance, tmApartment);
+  
 end.

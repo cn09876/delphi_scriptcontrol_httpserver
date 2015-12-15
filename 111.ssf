@@ -1,0 +1,3 @@
+For i=1 To 100
+	echo i & "<br>"
+next

@@ -567,11 +567,6 @@ end;
 
 procedure init;
 var
-  r:getrs;
-  s:string;
-  i,j:integer;
-  b:boolean;
-  sChkAll:String;
   connstr:string;
 begin
   connstr:='Provider=Microsoft.Jet.OLEDB.4.0;Data Source='+sysutils.ExtractFilePath(application.exename)+'/db.mdb;Jet OLEDB:Database Password=;';

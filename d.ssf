@@ -49,7 +49,7 @@ End Class
 
 Function g(sql)
 	Dim sRet
-	sRet=query(sql)
+	sRet=query_sql(sql)
 	cols=getpart(sRet,"<cols>","</cols>")
 	rows=getpart(sRet,"<rows>","</rows>")
 	arrRows=Split(rows,"```")
